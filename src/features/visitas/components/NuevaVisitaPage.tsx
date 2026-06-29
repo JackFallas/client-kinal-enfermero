@@ -9,7 +9,7 @@ export const NuevaVisitaPage = () => {
   const [emitirAlerta, setEmitirAlerta] = useState(false)
   const [form, setForm] = useState({
     estudianteCarnet: '', motivo: '', descripcion: '',
-    temperatura: '', presion: '', peso: '', tratamiento: '', observaciones: '', mensajeAlerta: '',
+    temperatura: '', tratamiento: '', observaciones: '', mensajeAlerta: '',
   })
 
   const set = (field: string, value: string) => setForm((p) => ({ ...p, [field]: value }))
@@ -23,8 +23,6 @@ export const NuevaVisitaPage = () => {
         motivo: form.motivo,
         descripcion: form.descripcion || undefined,
         temperatura: form.temperatura ? Number(form.temperatura) : undefined,
-        presion: form.presion || undefined,
-        peso: form.peso ? Number(form.peso) : undefined,
         tratamiento: form.tratamiento || undefined,
         observaciones: form.observaciones || undefined,
         emitirAlerta,
@@ -74,11 +72,7 @@ export const NuevaVisitaPage = () => {
           />
         </div>
 
-        <div className="grid grid-cols-3 gap-3 sm:gap-4">
-          <Field label="Temperatura °C" field="temperatura" type="number" placeholder="37.0" />
-          <Field label="Presión" field="presion" placeholder="120/80" />
-          <Field label="Peso kg" field="peso" type="number" placeholder="60" />
-        </div>
+        <Field label="Temperatura °C" field="temperatura" type="number" placeholder="37.0" />
 
         <Field label="Tratamiento" field="tratamiento" placeholder="Paracetamol 500mg, reposo..." />
 
