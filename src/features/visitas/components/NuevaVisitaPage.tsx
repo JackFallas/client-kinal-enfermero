@@ -3,6 +3,19 @@ import { useNavigate } from 'react-router-dom'
 import { createVisita } from '../../../shared/api/visitas'
 import toast from 'react-hot-toast'
 
+const Field = ({ label, value, onChange, type = 'text', placeholder = '', required = false }: {
+  label: string; value: string; onChange: (v: string) => void; type?: string; placeholder?: string; required?: boolean
+}) => (
+  <div>
+    <label className="block text-xs font-semibold text-[#144272] mb-1.5 uppercase tracking-wide">{label}</label>
+    <input
+      type={type} value={value} onChange={(e) => onChange(e.target.value)}
+      placeholder={placeholder} required={required}
+      className="w-full border border-blue-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#00ACC1] focus:border-transparent shadow-sm bg-white"
+    />
+  </div>
+)
+
 export const NuevaVisitaPage = () => {
   const navigate = useNavigate()
   const [loading, setLoading] = useState(false)
@@ -37,19 +50,6 @@ export const NuevaVisitaPage = () => {
     }
   }
 
-  const Field = ({ label, field, type = 'text', placeholder = '', required = false }: {
-    label: string; field: string; type?: string; placeholder?: string; required?: boolean
-  }) => (
-    <div>
-      <label className="block text-xs font-semibold text-[#144272] mb-1.5 uppercase tracking-wide">{label}</label>
-      <input
-        type={type} value={form[field as keyof typeof form]} onChange={(e) => set(field, e.target.value)}
-        placeholder={placeholder} required={required}
-        className="w-full border border-blue-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#00ACC1] focus:border-transparent shadow-sm bg-white"
-      />
-    </div>
-  )
-
   return (
     <div className="max-w-2xl mx-auto space-y-5">
       <div>
@@ -59,8 +59,8 @@ export const NuevaVisitaPage = () => {
 
       <form onSubmit={handleSubmit} className="bg-white rounded-xl border border-blue-50 shadow-sm p-4 sm:p-6 space-y-5">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <Field label="Carnet del estudiante *" field="estudianteCarnet" placeholder="2023001" required />
-          <Field label="Motivo *" field="motivo" placeholder="Dolor de cabeza, fiebre..." required />
+          <Field label="Carnet del estudiante *" value={form.estudianteCarnet} onChange={(v) => set('estudianteCarnet', v)} placeholder="2023001" required />
+          <Field label="Motivo *" value={form.motivo} onChange={(v) => set('motivo', v)} placeholder="Dolor de cabeza, fiebre..." required />
         </div>
 
         <div>
@@ -72,9 +72,9 @@ export const NuevaVisitaPage = () => {
           />
         </div>
 
-        <Field label="Temperatura °C" field="temperatura" type="number" placeholder="37.0" />
+        <Field label="Temperatura °C" value={form.temperatura} onChange={(v) => set('temperatura', v)} type="number" placeholder="37.0" />
 
-        <Field label="Tratamiento" field="tratamiento" placeholder="Paracetamol 500mg, reposo..." />
+        <Field label="Tratamiento" value={form.tratamiento} onChange={(v) => set('tratamiento', v)} placeholder="Paracetamol 500mg, reposo..." />
 
         <div>
           <label className="block text-xs font-semibold text-[#144272] mb-1.5 uppercase tracking-wide">Observaciones</label>
