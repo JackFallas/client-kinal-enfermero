@@ -5,10 +5,9 @@ export interface Visita {
   motivo: string
   descripcion?: string
   temperatura?: number
-  presion?: string
-  peso?: number
   tratamiento?: string
   observaciones?: string
+  requiereRetirarse?: boolean
   fechaHora: string
   estudiante: { carnet?: string; primerNombre: string; primerApellido: string; seccion?: { codigo: string } }
   alerta?: { mensaje: string; leida: boolean } | null
@@ -19,10 +18,9 @@ export interface CreateVisitaDto {
   motivo: string
   descripcion?: string
   temperatura?: number
-  presion?: string
-  peso?: number
   tratamiento?: string
   observaciones?: string
+  requiereRetirarse?: boolean
   emitirAlerta?: boolean
   mensajeAlerta?: string
 }

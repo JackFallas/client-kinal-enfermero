@@ -104,8 +104,7 @@ export const HistorialPage = () => {
                   <div className="flex flex-wrap gap-3 mt-1.5 text-xs text-slate-400">
                     <span>{new Date(v.fechaHora).toLocaleString('es-GT')}</span>
                     {v.temperatura && <span>🌡 {v.temperatura}°C</span>}
-                    {v.presion && <span>💉 {v.presion}</span>}
-                    {v.peso && <span>⚖ {v.peso} kg</span>}
+                    {v.requiereRetirarse && <span className="text-amber-600 font-medium">🚸 Requirió retirarse</span>}
                   </div>
                   {v.tratamiento && (
                     <p className="text-xs text-slate-500 mt-1.5">
