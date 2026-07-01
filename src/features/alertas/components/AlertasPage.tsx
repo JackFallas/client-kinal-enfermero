@@ -71,13 +71,16 @@ export const AlertasPage = () => {
                   <div className="flex items-center gap-2 mb-1 flex-wrap">
                     {!a.leida && <span className="w-2 h-2 rounded-full bg-red-500 shrink-0" />}
                     <span className="text-xs text-slate-400">{new Date(a.creadaEn).toLocaleString('es-GT')}</span>
-                    <span className="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">{a.seccion.codigo}</span>
+                    {a.seccion && <span className="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">{a.seccion.codigo}</span>}
                   </div>
                   <p className="font-semibold text-[#0A2647] text-sm">{a.mensaje}</p>
                   <p className="text-xs text-slate-500 mt-1">
                     <span className="font-medium">{a.estudiante.primerNombre} {a.estudiante.primerApellido}</span>
                     {a.estudiante.carnet && <span className="text-slate-400 font-mono"> ({a.estudiante.carnet})</span>}
-                    {' · '}{a.visita.motivo}
+                    {a.visita && <>{' · '}{a.visita.motivo}</>}
+                  </p>
+                  <p className="text-xs text-slate-400 mt-1">
+                    Enviado por <span className="font-medium text-slate-500">{a.origenUsuario.primerNombre} {a.origenUsuario.primerApellido}</span>
                   </p>
                 </div>
                 {!a.leida && (

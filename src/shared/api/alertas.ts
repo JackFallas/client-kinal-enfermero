@@ -5,9 +5,11 @@ export interface Alerta {
   mensaje: string
   leida: boolean
   creadaEn: string
+  destino: 'COORDINADOR_SECCION' | 'ENFERMERO'
   estudiante: { carnet?: string; primerNombre: string; primerApellido: string }
-  seccion: { codigo: string; nombre: string }
-  visita: { motivo: string; fechaHora: string }
+  origenUsuario: { primerNombre: string; primerApellido: string; role: string }
+  seccion?: { codigo: string; nombre: string } | null
+  visita?: { motivo: string; fechaHora: string } | null
 }
 
 export const getAlertas = (leida?: boolean) =>
