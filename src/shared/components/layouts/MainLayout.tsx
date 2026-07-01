@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Outlet, NavLink, useNavigate } from 'react-router-dom'
 import {
-  FiActivity, FiBell, FiFolder, FiLogOut, FiUser,
+  FiActivity, FiBell, FiLogOut, FiUser,
   FiX, FiPlusCircle, FiMenu, FiList,
 } from 'react-icons/fi'
 import imgLogo from '../../../assets/img/GESAPLogo.svg'
@@ -12,7 +12,6 @@ const navItems = [
   { to: '/portal',          icon: FiPlusCircle, label: 'Registrar visita',  end: true  },
   { to: '/portal/visitas',  icon: FiList,       label: 'Historial visitas', end: false },
   { to: '/portal/alertas',  icon: FiBell,       label: 'Alertas',           end: false },
-  { to: '/portal/documentos', icon: FiFolder,   label: 'Documentos',        end: false },
 ]
 
 interface SidebarProps { isOpen?: boolean; onClose?: () => void }

@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { FiSearch, FiUser, FiFileText, FiPhone, FiCheckCircle, FiX } from 'react-icons/fi'
+import { FiSearch, FiUser, FiFileText, FiPhone, FiCheckCircle, FiClock, FiX } from 'react-icons/fi'
 import { createVisita } from '../../../shared/api/visitas'
 import { getEstudiantePorCarnet, type EstudiantePerfil } from '../../../shared/api/estudiantes'
-import { getDocumentosEstudiante, type Documento } from '../../../shared/api/documentos'
+import { getDocumentosEstudiante, verificarDocumento, type Documento } from '../../../shared/api/documentos'
 import { getContactosDeEstudiante, type ContactoEmergencia } from '../../../shared/api/contactosEmergencia'
 import toast from 'react-hot-toast'
 
@@ -52,6 +52,7 @@ export const NuevaVisitaPage = () => {
   const [estudiante, setEstudiante] = useState<EstudiantePerfil | null>(null)
   const [documentos, setDocumentos] = useState<Documento[]>([])
   const [contactos, setContactos] = useState<ContactoEmergencia[]>([])
+  const [verificando, setVerificando] = useState<number | null>(null)
 
   // Formulario de visita
   const [form, setForm] = useState({ ...EMPTY_FORM })
@@ -80,6 +81,19 @@ export const NuevaVisitaPage = () => {
       setEstudiante(null)
     } finally {
       setBuscando(false)
+    }
+  }
+
+  const handleVerificar = async (id: number) => {
+    setVerificando(id)
+    try {
+      await verificarDocumento(id)
+      setDocumentos((prev) => prev.map((d) => d.id === id ? { ...d, verificado: true } : d))
+      toast.success('Documento verificado')
+    } catch {
+      toast.error('Error al verificar')
+    } finally {
+      setVerificando(null)
     }
   }
 
@@ -173,9 +187,16 @@ export const NuevaVisitaPage = () => {
               ) : (
                 <div className="space-y-1.5">
                   {documentos.map((d) => (
-                    <div key={d.id} className="flex items-center justify-between text-xs bg-slate-50 rounded-lg px-2.5 py-1.5">
-                      <span className="text-slate-600">{d.tipo === 'CARTA_ALERGIA' ? 'Carta de alergia' : d.tipo === 'CARTA_MEDICA' ? 'Carta médica' : 'Otro'}{d.descripcion ? ` — ${d.descripcion}` : ''}</span>
-                      {d.verificado && <FiCheckCircle className="text-emerald-500 shrink-0" size={13} />}
+                    <div key={d.id} className="flex items-center justify-between gap-2 text-xs bg-slate-50 rounded-lg px-2.5 py-1.5">
+                      <span className="text-slate-600 min-w-0 truncate">{d.tipo === 'CARTA_ALERGIA' ? 'Carta de alergia' : d.tipo === 'CARTA_MEDICA' ? 'Carta médica' : 'Otro'}{d.descripcion ? ` — ${d.descripcion}` : ''}</span>
+                      {d.verificado ? (
+                        <span className="flex items-center gap-1 text-emerald-600 shrink-0"><FiCheckCircle size={13} /> Verificado</span>
+                      ) : (
+                        <button type="button" onClick={() => handleVerificar(d.id)} disabled={verificando === d.id}
+                          className="flex items-center gap-1 text-amber-700 bg-amber-50 hover:bg-amber-100 border border-amber-200 px-2 py-1 rounded-md font-medium shrink-0 transition-colors disabled:opacity-60">
+                          <FiClock size={11} /> {verificando === d.id ? 'Verificando...' : 'Verificar'}
+                        </button>
+                      )}
                     </div>
                   ))}
                 </div>
