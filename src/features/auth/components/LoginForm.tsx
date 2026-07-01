@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import { FiLock, FiEye, FiEyeOff, FiActivity, FiLoader, FiAlertTriangle, FiMail } from 'react-icons/fi'
 import imgLogo from '../../../assets/img/GESAPLogo.svg'
 import { useAuthStore } from '../store/authStore'
@@ -140,6 +140,9 @@ export const LoginForm = () => {
                 >
                   {showPass ? <FiEyeOff size={16} /> : <FiEye size={16} />}
                 </button>
+              </div>
+              <div className="text-right mt-1.5">
+                <Link to="/olvide-password" className="text-xs text-[#0E6BA8] font-semibold hover:underline">¿Olvidaste tu contraseña?</Link>
               </div>
             </div>
 
